@@ -4,10 +4,11 @@ class NetworkHasCircleException(Exception):
 
 def parse_network(path):
     network = {}
-    for line in open(path):
-        source_node, target_node = line.strip().split(" ")
-        source_node_neighbors = network.setdefault(source_node, [])
-        source_node_neighbors.append(target_node)
+    with open(path) as f:
+        for line in f:
+            source_node, target_node = line.strip().split(" ")
+            source_node_neighbors = network.setdefault(source_node, [])
+            source_node_neighbors.append(target_node)
     return network
 
 
