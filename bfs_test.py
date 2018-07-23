@@ -1,5 +1,5 @@
 import unittest
-from bfs import bfs, NetworkHasCircleException, parse_network
+from bfs import bfs, NetworkHasCircleException, parse_network, check_circle
 
 
 class BFSTestCase(unittest.TestCase):
@@ -20,6 +20,13 @@ class BFSTestCase(unittest.TestCase):
 
     def test_path_with_circles(self):
         self.assertEqual({"A,B,C"}, bfs("A", "C", {"A": ["B"], "B": ["A", "C"]}))
+
+    def test_check_circle_with_self_circle(self):
+        self.assertEqual({"A": ["B"], "B": ["C"]}, check_circle("A",  {"A": ["A", "B"], "B": ["A", "C"]}))
+
+
+    def test_path_with_self_circle(self):
+        self.assertEqual({"A,B,C"}, bfs("A", "C", {"A": ["B", "A"], "B": ["A", "C"]}))
 
 if __name__ == '__main__':
     unittest.main()
