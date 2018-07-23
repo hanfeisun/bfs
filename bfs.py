@@ -13,15 +13,19 @@ def parse_network(path):
 
 
 def check_circle(source, network):
+
     def helper(current_node, visited):
         if current_node in visited:
-            raise NetworkHasCircleException
+            print("Found a circle %s -> %s" % (",".join(visited), current_node))
+            source_neighbors = network[visited[-1]]
+            source_neighbors.remove(current_node)
+            return
         visited.append(current_node)
         for neighbor in network.get(current_node, []):
             helper(neighbor, visited)
             visited.pop(len(visited) - 1)
-    helper(source, [])
 
+    helper(source, [])
 
 
 def get_connections(source, target, network):
